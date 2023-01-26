@@ -1,7 +1,22 @@
+# frozen_string_literal: true
+
 require 'faraday'
 
 module OpenWeatherClient
+  ##
+  # Request the weather from OpenWeatherMap
   class Request
+    ##
+    # Request the current weather
+    #
+    # @param lat[Float] latitude of the requests location
+    # @param lon[Float] longitude of the requests location
+    # @param time[Time] time of the request
+    #
+    # @raise [AuthenticationError] if the request is not authorized, e.g in case the API key is not correct
+    # @raise [NotCurrentError] if the requested time is older than 1 hour
+    #
+    # @return the response body
     def self.get(lat:, lon:, time: Time.now)
       raise OpenWeatherClient::NotCurrentError if time < Time.now - 1 * 60 * 60
 

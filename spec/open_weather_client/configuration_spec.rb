@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RailsTest
   class Credentials
     def self.open_weather_client!; end

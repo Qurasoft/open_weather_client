@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe OpenWeatherClient::Weather do
   describe 'current weather' do
     let(:lat) { 50.3569 }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe OpenWeatherClient::Request do
   describe 'current weather' do
     before :each do

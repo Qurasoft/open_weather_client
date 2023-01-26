@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe OpenWeatherClient::Cache do
   let(:lat) { 50.3569 }
   let(:lon) { 7.5890 }
