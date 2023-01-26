@@ -58,6 +58,24 @@ OpenWeatherClient.configure do |config|
 end
 ```
 
+### Caching
+By default Open Weather Client does not cache any data and every request will be send to the OpenWeatherMap servers.
+
+To speed up requests and reduce the number network requests caching can be enabled.
+When Open Weather Client is reset, the cache is also reset.
+The cache may be accessed directly through the singleton `OpenWeatherClient.cache`.
+
+TODO(Keune): Describe accessing historical data through caching 
+
+```ruby
+OpenWeatherClient.configure do |config|
+  config.caching = :memory # Allows: [:none, :memory]
+end
+```
+
+#### Memory Caching
+TODO(Keune): Finish memory caching description
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
