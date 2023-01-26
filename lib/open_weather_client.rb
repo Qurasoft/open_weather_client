@@ -11,6 +11,7 @@ require 'open_weather_client/weather'
 module OpenWeatherClient
   # Error during authentication with the OpenWeatherMap servers
   class AuthenticationError < StandardError; end
+
   # The rquested time is not current enough for getting weather data from the OpenWeatherMap server
   class NotCurrentError < StandardError; end
 
@@ -44,10 +45,14 @@ module OpenWeatherClient
     @configuration = Configuration.new
   end
 
+  ##
+  # Configure OpenWeatherClient
   def self.configure
     yield configuration
   end
 
+  ##
+  # Get the project root
   def self.project_root
     return Rails.root if defined?(Rails)
     return Bundler.root if defined?(Bundler)
@@ -55,8 +60,12 @@ module OpenWeatherClient
     Dir.pwd
   end
 
+  ##
+  # Get the gem root
   def self.gem_root
     spec = Gem::Specification.find_by_name('open_weather_client')
-    spec.gem_dir rescue project_root
+    spec.gem_dir
+  rescue NoMethodError
+    project_root
   end
 end
