@@ -19,6 +19,8 @@ module OpenWeatherClient
     # [String] User-Agent of the requests made to OpenWeatherMap
     attr_accessor :user_agent
 
+    ##
+    # Initialize a new Configuration with the default settings
     def initialize
       @caching = :none
       @lang = 'de'
