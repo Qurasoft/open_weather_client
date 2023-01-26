@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'open_weather_client'
+
+# You can add fixtures and/or initialization code here to make experimenting
+# with your gem easier. You can also use a different console, if you like.
+
+# (If you use this, don't forget to add pry to your Gemfile!)
+# require "pry"
+# Pry.start
+
+OpenWeatherClient.configure do |config|
+  if File.exist?('config.yml')
+    # NOTE(Keune): The channels available in the console can be set in the file channels.yml. It contains a simple
+    # mapping of channel identifiers to webhook URLs. The channel identifier is loaded as a symbol.
+    #
+    # Example: APPID: "<INSERT YOUR WEBHOOK URL HERE>"
+    puts 'Load channels specified by file'
+
+    require 'yaml'
+    settings = YAML.load_file 'config.yml'
+    config.appid = settings['APPID']
+  end
+end
+
+require 'irb'
+IRB.start(__FILE__)
