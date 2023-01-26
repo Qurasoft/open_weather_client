@@ -1,18 +1,23 @@
 module OpenWeatherClient
   class Cache
-    attr :memory_cache
+    attr :memory_cache, :memory_keys
 
     def initialize
       @memory_cache = {}
+      @memory_keys = []
     end
 
     def get(lat:, lon:, time:)
       key = cache_key(lat: lat, lon: lon, time: time)
-      raise KeyError unless present?(lat: lat, lon: lon)
+      raise KeyError unless present?(key)
 
       caching = OpenWeatherClient.configuration.caching
 
-      return @memory_cache[key] if caching == :memory
+      if caching == :memory
+        @memory_keys.delete(key)
+        @memory_keys << key
+        return @memory_cache[key]
+      end
 
       nil
     end
@@ -21,7 +26,15 @@ module OpenWeatherClient
       caching = OpenWeatherClient.configuration.caching
       key = cache_key(lat: lat, lon: lon, time: time)
 
-      @memory_cache[key] = data if caching == :memory
+      if caching == :memory
+        @memory_cache[key] = data
+        @memory_keys.delete(key)
+        @memory_keys << key
+
+        if @memory_keys.count > OpenWeatherClient.configuration.max_memory_entries
+          @memory_cache.delete(@memory_keys.shift)
+        end
+      end
 
       data
     end
@@ -36,7 +49,7 @@ module OpenWeatherClient
       caching = OpenWeatherClient.configuration.caching
       return false if caching == :none
 
-      return @memory_cache.key?(key) if caching == :memory
+      return @memory_keys.include?(key) if caching == :memory
 
       false
     end
