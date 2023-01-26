@@ -10,9 +10,7 @@ module OpenWeatherClient
     end
 
     def load_from_rails_credentials
-      unless defined? Rails
-        raise RuntimeError, 'This method is only available in Ruby on Rails.'
-      end
+      raise 'This method is only available in Ruby on Rails.' unless defined? Rails
 
       settings = Rails.application.credentials.open_weather_client!
       self.appid = settings[:appid]

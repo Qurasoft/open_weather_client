@@ -22,19 +22,14 @@ module OpenWeatherClient
   end
 
   def self.project_root
-    if defined?(Rails)
-      return Rails.root
-    end
-
-    if defined?(Bundler)
-      return Bundler.root
-    end
+    return Rails.root if defined?(Rails)
+    return Bundler.root if defined?(Bundler)
 
     Dir.pwd
   end
 
   def self.gem_root
-    spec = Gem::Specification.find_by_name("open_weather_client")
+    spec = Gem::Specification.find_by_name('open_weather_client')
     spec.gem_dir rescue project_root
   end
 end
