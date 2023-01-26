@@ -1,8 +1,9 @@
 module OpenWeatherClient
   class Configuration
-    attr_accessor :appid, :lang, :units, :url, :user_agent
+    attr_accessor :appid, :caching, :lang, :units, :url, :user_agent
 
     def initialize
+      @caching = :none
       @lang = 'de'
       @units = 'metric'
       @url = 'https://api.openweathermap.org/data'

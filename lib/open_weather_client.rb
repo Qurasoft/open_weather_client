@@ -1,12 +1,19 @@
+require 'open_weather_client/cache'
 require 'open_weather_client/configuration'
+require 'open_weather_client/request'
 require 'open_weather_client/version'
 require 'open_weather_client/weather'
 
 module OpenWeatherClient
   class AuthenticationError < StandardError; end
+  class NotCurrentError < StandardError; end
 
   class << self
-    attr_accessor :configuration, :testing
+    attr_writer :cache, :configuration
+  end
+
+  def self.cache
+    @cache ||= Cache.new
   end
 
   def self.configuration
@@ -14,6 +21,7 @@ module OpenWeatherClient
   end
 
   def self.reset
+    @cache = Cache.new
     @configuration = Configuration.new
   end
 

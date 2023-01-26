@@ -1,34 +1,20 @@
-require 'faraday'
-
 module OpenWeatherClient
   class Weather
-    def self.current(lat:, lon:)
+    attr_accessor :lat, :lon, :time
+
+    def initialize(lat:, lon:, time: Time.now)
       raise RangeError unless (-90..90).member?(lat)
       raise RangeError unless (-180..180).member?(lon)
 
-      connection = Faraday.new(
-        url: OpenWeatherClient.configuration.url,
-        params: {
-          appid: OpenWeatherClient.configuration.appid,
-          lat: lat,
-          lon: lon,
-          lang: OpenWeatherClient.configuration.lang,
-          units: OpenWeatherClient.configuration.units
-        },
-        headers: {
-          'User-Agent': OpenWeatherClient.configuration.user_agent
-        }
-      ) do |f|
-        f.response :raise_error
-        f.response :json
-      end
+      @lat = lat
+      @lon = lon
+      @time = time
+    end
 
-      begin
-        response = connection.get('2.5/weather')
-        response.body
-      rescue Faraday::UnauthorizedError
-        raise OpenWeatherClient::AuthenticationError
-      end
+    def get
+      OpenWeatherClient.cache.get(lat: lat, lon: lon, time: time)
+    rescue KeyError
+      OpenWeatherClient::Request.get(lat: lat, lon: lon)
     end
   end
 end
