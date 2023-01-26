@@ -16,12 +16,16 @@ module OpenWeatherClient
           'User-Agent': OpenWeatherClient.configuration.user_agent
         }
       ) do |f|
+        f.response :raise_error
         f.response :json
       end
 
-      response = connection.get('2.5/weather')
-
-      response.body
+      begin
+        response = connection.get('2.5/weather')
+        response.body
+      rescue Faraday::UnauthorizedError
+        raise OpenWeatherClient::AuthenticationError
+      end
     end
   end
 end

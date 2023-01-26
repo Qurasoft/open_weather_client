@@ -21,5 +21,17 @@ RSpec.describe OpenWeatherClient::Weather do
 
       expect(WebMock).to have_requested(:get, 'https://api.openweathermap.org/data/2.5/weather').with query: hash_including, headers: { "User-Agent": "Open Weather Client/#{OpenWeatherClient::VERSION}" }
     end
+
+    describe 'error handling' do
+      context 'authentication' do
+        before :each do
+          stub_request(:get, 'https://api.openweathermap.org/data/2.5/weather').with(query: hash_including(:appid, :lat, :lon, :lang, :units)).to_return(status: 401)
+        end
+
+        it 'raises authentication error' do
+          expect { subject }.to raise_error OpenWeatherClient::AuthenticationError
+        end
+      end
+    end
   end
 end

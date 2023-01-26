@@ -3,6 +3,8 @@ require 'open_weather_client/version'
 require 'open_weather_client/weather'
 
 module OpenWeatherClient
+  class AuthenticationError < StandardError; end
+
   class << self
     attr_accessor :configuration, :testing
   end
