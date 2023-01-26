@@ -32,6 +32,24 @@ RSpec.describe OpenWeatherClient::Weather do
           expect { subject }.to raise_error OpenWeatherClient::AuthenticationError
         end
       end
+
+      context 'arguments' do
+        context 'latitude' do
+          let(:lat) { 100 }
+
+          it 'raises ange error' do
+            expect { subject }.to raise_error RangeError
+          end
+        end
+
+        context 'longitude' do
+          let(:lon) { 200 }
+
+          it 'raises ange error' do
+            expect { subject }.to raise_error RangeError
+          end
+        end
+      end
     end
   end
 end

@@ -35,6 +35,11 @@ end
 OpenWeatherClient::Weather.current(lat: 50.3569, lon: 7.5890)
 ```
 
+### Exceptions during requests
+When an error occurs during a request, an exception is raised.
+If the request is not authorized `OpenWeatherClient::AutheniticationError` is raied.
+When attributes like latitude or longitude are outside of the expected range a `RangeError` is raised.
+
 ### Secure Configuration
 In Rails provides the credentials functionality for [environmental security](https://edgeguides.rubyonrails.org/security.html#environmental-security). This mechanism can be used by OpenWeatherClient to load the API key from an encrypted file. This also allows easy separation of production and development channel configuration.
 All settings are defined under the top-level entry `open_weather_client`.

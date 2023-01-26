@@ -3,6 +3,9 @@ require 'faraday'
 module OpenWeatherClient
   class Weather
     def self.current(lat:, lon:)
+      raise RangeError unless (-90..90).member?(lat)
+      raise RangeError unless (-180..180).member?(lon)
+
       connection = Faraday.new(
         url: OpenWeatherClient.configuration.url,
         params: {
