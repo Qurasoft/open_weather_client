@@ -17,10 +17,6 @@ class RailsTest
 end
 
 RSpec.describe OpenWeatherClient::Configuration do
-  before :each do
-    OpenWeatherClient.reset
-  end
-
   subject { OpenWeatherClient.configuration }
 
   it 'has a default configuration' do
