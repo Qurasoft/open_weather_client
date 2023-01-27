@@ -70,7 +70,7 @@ If caching is enabled, requests with a time older than one hour might still be a
 
 ```ruby
 OpenWeatherClient.configure do |config|
-  config.caching = :memory # Allows: [:none, :memory]
+  config.caching = OpenWeatherClient::Caching::Memory
   config.max_memory_entries = 100 # Maximum number of entries in memory cache
 end
 ```
@@ -78,6 +78,10 @@ end
 #### Memory Caching
 `OpenWeatherClient` supports simple in memory caching.
 A hash is used to store and look up the cached responses.
+
+#### Custom Caching
+To implement custom caching, the interface of `OpenWeatherClient::Caching` is used.
+A custom caching solution must implement its specific `caching_get(key)`, `caching_store(key, data)` and `present?(key)` methods.
 
 ## Development
 

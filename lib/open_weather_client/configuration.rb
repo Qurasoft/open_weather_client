@@ -30,6 +30,10 @@ module OpenWeatherClient
       @user_agent = "Open Weather Client/#{OpenWeatherClient::VERSION}"
     end
 
+    ##
+    # Set the caching method
+    #
+    # @param cache_class[Class] class definition adhering to the OpenWeatherClient::Caching interface
     def caching=(cache_class)
       @caching = cache_class.new
     end

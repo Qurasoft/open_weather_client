@@ -1,5 +1,10 @@
 module OpenWeatherClient
   class Caching
+    ##
+    # Memory cache of OpenWeatherMap requests
+    #
+    # The requests are cached in memory up to the number specified in config.max_memory_entries.
+    # When the limit is reached the least recently used entry is evicted.
     class Memory < OpenWeatherClient::Caching
       # Memory cache to store a hash of keys and request data
       attr :memory_cache
@@ -16,27 +21,12 @@ module OpenWeatherClient
 
       private
 
-      ##
-      # Read an entry out of the memory cache
-      #
-      # @param key[String] key into the cache. Is stored at the end of the key registry
-      #
-      # @return [Hash] the stored data
       def caching_get(key)
         @memory_keys.delete(key)
         @memory_keys << key if @memory_cache.key? key
         @memory_cache[key]
       end
 
-      ##
-      # Store an entry in the memory cache
-      #
-      # Evicts the entry with the least recent access if the memory cache is full
-      #
-      # @param key[String] key into the cache. Is stored at the end of the key registry
-      # @param data[Hash] data to be stored, must be able to be formatted and parsed as text
-      #
-      # @return [Hash] the input data
       def caching_store(key, data)
         @memory_cache[key] = data
         @memory_keys.delete(key)

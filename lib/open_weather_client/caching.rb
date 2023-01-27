@@ -6,6 +6,8 @@ module OpenWeatherClient
   #
   # The entries are cached according to latitude, longitude and time of the request.
   # The time is clamped to the current hour
+  #
+  # This is the caching interface and equals a none cache. Get requests raise an error.
   class Caching
     ##
     # Get an entry out of the cache defined by its +lat+, +lon+ and +time+.
@@ -38,6 +40,8 @@ module OpenWeatherClient
       key = cache_key(lat, lon, time)
 
       caching_store(key, data)
+
+      data
     end
 
     private
@@ -52,11 +56,26 @@ module OpenWeatherClient
       "#{lat}_#{lon}_#{time.strftime('%Y-%m-%dT%H')}"
     end
 
-    def caching_get(_key)
+    ##
+    # Read an entry out of the memory cache
+    #
+    # @param key[String] key into the cache. Is stored at the end of the key registry
+    #
+    # @return [Hash] the stored data
+    def caching_get(key)
       raise NotImplementedError
     end
 
-    def caching_store(_key, data)
+    ##
+    # Store an entry in the memory cache
+    #
+    # Evicts the entry with the least recent access if the memory cache is full
+    #
+    # @param key[String] key into the cache. Is stored at the end of the key registry
+    # @param data[Hash] data to be stored, must be able to be formatted and parsed as text
+    #
+    # @return [Hash] the input data
+    def caching_store(key, data)
       data
     end
 
