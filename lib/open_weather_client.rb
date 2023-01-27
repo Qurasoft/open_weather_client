@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'open_weather_client/cache'
+require 'open_weather_client/caching'
 require 'open_weather_client/configuration'
 require 'open_weather_client/request'
 require 'open_weather_client/version'
@@ -16,7 +16,7 @@ module OpenWeatherClient
   class NotCurrentError < StandardError; end
 
   class << self
-    # Cache singleton to access the cache
+    # Caching singleton to access the cache
     attr_writer :cache
     # Configuration singleton to access the configuration
     attr_writer :configuration
@@ -25,9 +25,9 @@ module OpenWeatherClient
   ##
   # Get the singleton cache instance
   #
-  # @return [Cache] the cache
+  # @return [Caching] the cache
   def self.cache
-    @cache ||= Cache.new
+    @cache ||= Caching.new
   end
 
   ##
@@ -41,7 +41,7 @@ module OpenWeatherClient
   ##
   # Reset cache and configuration
   def self.reset
-    @cache = Cache.new
+    @cache = Caching.new
     @configuration = Configuration.new
   end
 

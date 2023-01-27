@@ -7,7 +7,7 @@ module OpenWeatherClient
     # [String] API key to access OpenWeatherMap
     attr_accessor :appid
     # Caching method. One of :none, :memory
-    attr_accessor :caching
+    attr_reader :caching
     # [String] Requested language of the result
     attr_accessor :lang
     # [Integer] Maximum allowed number of entries when using caching method :memory
@@ -22,12 +22,16 @@ module OpenWeatherClient
     ##
     # Initialize a new Configuration with the default settings
     def initialize
-      @caching = :none
+      @caching = OpenWeatherClient::Caching.new
       @lang = 'de'
       @max_memory_entries = 10_000
       @units = 'metric'
       @url = 'https://api.openweathermap.org/data'
       @user_agent = "Open Weather Client/#{OpenWeatherClient::VERSION}"
+    end
+
+    def caching=(cache_class)
+      @caching = cache_class.new
     end
 
     ##

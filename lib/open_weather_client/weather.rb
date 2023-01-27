@@ -2,7 +2,7 @@
 
 module OpenWeatherClient
   ##
-  # Request weather information from OpenWeatherMap or the Cache
+  # Request weather information from OpenWeatherMap or the cache
   class Weather
     # [Float] latitude of the requested location
     attr_accessor :lat

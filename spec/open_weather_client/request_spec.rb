@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'open_weather_client/caching/memory'
+
 RSpec.describe OpenWeatherClient::Request do
   describe 'current weather' do
     before :each do
@@ -50,7 +52,7 @@ RSpec.describe OpenWeatherClient::Request do
 
     describe 'caching' do
       before :each do
-        OpenWeatherClient.configuration.caching = :memory
+        OpenWeatherClient.configuration.caching = OpenWeatherClient::Caching::Memory
       end
 
       it 'uses cached response' do

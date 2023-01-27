@@ -9,7 +9,7 @@ RSpec.describe OpenWeatherClient do
     subject { OpenWeatherClient.cache }
 
     it 'is a singleton' do
-      is_expected.to be_a OpenWeatherClient::Cache
+      is_expected.to be_a OpenWeatherClient::Caching
       is_expected.to be OpenWeatherClient.cache
     end
 
@@ -18,8 +18,8 @@ RSpec.describe OpenWeatherClient do
       OpenWeatherClient.reset
       new_cache = OpenWeatherClient.cache
 
-      expect(old_cache).to be_a OpenWeatherClient::Cache
-      expect(new_cache).to be_a OpenWeatherClient::Cache
+      expect(old_cache).to be_a OpenWeatherClient::Caching
+      expect(new_cache).to be_a OpenWeatherClient::Caching
       expect(old_cache).not_to be new_cache
     end
   end
