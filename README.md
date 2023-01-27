@@ -83,6 +83,21 @@ A hash is used to store and look up the cached responses.
 To implement custom caching, the interface of `OpenWeatherClient::Caching` is used.
 A custom caching solution must implement its specific `caching_get(key)`, `caching_store(key, data)` and `present?(key)` methods.
 
+### Spatial Quantization
+Since weather is more often than not a wider phenomenon, the high resolution location data, commonly available today may interfere with the performance even when using caching.
+Caching uses the full resolution of the location data.
+By default no quantization is performed.
+
+OpenWeatherClient allows defining a quantization function to transform the latitude and longitude data before making requests or hitting the cache.
+The quantization receives latitude and longitude.
+The result is coerced back into latitude and longitude.
+
+```ruby
+OpenWeatherClient.configure do |config|
+  config.spatial_quantization = proc { |lat, lon| [lat.round(2), lon.round(2)] }
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

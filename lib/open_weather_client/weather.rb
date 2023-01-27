@@ -20,6 +20,10 @@ module OpenWeatherClient
     #
     # @raise [RangeError] if one +lat+ or +lon+ are out of the expected ranges
     def initialize(lat:, lon:, time: Time.now)
+      if OpenWeatherClient.configuration.spatial_quantization.respond_to?(:call)
+        lat, lon = OpenWeatherClient.configuration.spatial_quantization.call(lat, lon)
+      end
+
       raise RangeError unless (-90..90).member?(lat)
       raise RangeError unless (-180..180).member?(lon)
 
