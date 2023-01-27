@@ -1,6 +1,27 @@
+# frozen_string_literal: true
+
 RSpec.describe OpenWeatherClient do
   it 'has a version number' do
     expect(OpenWeatherClient::VERSION).not_to be nil
+  end
+
+  context 'cache' do
+    subject { OpenWeatherClient.cache }
+
+    it 'is a singleton' do
+      is_expected.to be_a OpenWeatherClient::Caching
+      is_expected.to be OpenWeatherClient.cache
+    end
+
+    it 'can be reset' do
+      old_cache = OpenWeatherClient.cache
+      OpenWeatherClient.reset
+      new_cache = OpenWeatherClient.cache
+
+      expect(old_cache).to be_a OpenWeatherClient::Caching
+      expect(new_cache).to be_a OpenWeatherClient::Caching
+      expect(old_cache).not_to be new_cache
+    end
   end
 
   context 'configuration' do

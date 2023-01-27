@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
 module OpenWeatherClient
-  VERSION = '0.1.2'.freeze
+  ##
+  # Version of OpenWeatherClient
+  VERSION = '0.1.2'
 end

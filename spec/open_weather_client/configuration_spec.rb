@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RailsTest
   class Credentials
     def self.open_weather_client!; end
@@ -23,6 +25,7 @@ RSpec.describe OpenWeatherClient::Configuration do
 
   it 'has a default configuration' do
     is_expected.to have_attributes(appid: nil)
+    is_expected.to have_attributes(caching: OpenWeatherClient::Caching)
     is_expected.to have_attributes(units: 'metric')
     is_expected.to have_attributes(url: 'https://api.openweathermap.org/data')
     is_expected.to have_attributes(user_agent: "Open Weather Client/#{OpenWeatherClient::VERSION}")

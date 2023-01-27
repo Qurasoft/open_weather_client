@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/open_weather_client.svg)](https://badge.fury.io/rb/open_weather_client)
 ![RSpec](https://github.com/qurasoft/open_weather_client/actions/workflows/ruby.yml/badge.svg)
 
-Welcome to Open Weather Client. This gem allows you to easily send messages from your ruby project to Microsoft Teams channels.
+Welcome to Open Weather Client. This gem allows you to easily request weather information from OpenWeatherMap.
 It integrates in your rails project, when you are using bundler or even in plain ruby projects.
 
 ## Installation
@@ -57,6 +57,31 @@ OpenWeatherClient.configure do |config|
   config.load_from_rails_credentials
 end
 ```
+
+### Caching
+By default Open Weather Client does not cache any data and every request will be send to the OpenWeatherMap servers.
+
+To speed up requests and reduce the number network requests caching can be enabled.
+When Open Weather Client is reset, the cache is also reset.
+The cache may be accessed directly through the singleton `OpenWeatherClient.cache`.
+
+Whether requests are only performed when the requested time is within the last hour.
+If caching is enabled, requests with a time older than one hour might still be answered with a response.
+
+```ruby
+OpenWeatherClient.configure do |config|
+  config.caching = OpenWeatherClient::Caching::Memory
+  config.max_memory_entries = 100 # Maximum number of entries in memory cache
+end
+```
+
+#### Memory Caching
+`OpenWeatherClient` supports simple in memory caching.
+A hash is used to store and look up the cached responses.
+
+#### Custom Caching
+To implement custom caching, the interface of `OpenWeatherClient::Caching` is used.
+A custom caching solution must implement its specific `caching_get(key)`, `caching_store(key, data)` and `present?(key)` methods.
 
 ## Development
 
