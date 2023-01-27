@@ -12,6 +12,8 @@ module OpenWeatherClient
     attr_accessor :lang
     # [Integer] Maximum allowed number of entries when using caching method :memory
     attr_accessor :max_memory_entries
+    # [Proc] Quantization of latitude and longitude
+    attr_accessor :spatial_quantization
     # [String] Requested units of the result
     attr_accessor :units
     # [String] Base URL of the requests to OpenWeatherMap
