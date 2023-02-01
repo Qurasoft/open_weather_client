@@ -28,9 +28,7 @@ module OpenWeatherClient
       end
     end
 
-    private
-
-    def connection(lat, lon)
+    def self.connection(lat, lon)
       Faraday.new(
         url: OpenWeatherClient.configuration.url,
         params: params(lat, lon),
@@ -41,13 +39,13 @@ module OpenWeatherClient
       end
     end
 
-    def headers
+    def self.headers
       {
         'User-Agent': OpenWeatherClient.configuration.user_agent
       }
     end
 
-    def params(lat, lon)
+    def self.params(lat, lon)
       {
         appid: OpenWeatherClient.configuration.appid,
         lat: lat,
