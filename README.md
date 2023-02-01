@@ -3,7 +3,8 @@
 [![Gem Version](https://badge.fury.io/rb/open_weather_client.svg)](https://badge.fury.io/rb/open_weather_client)
 ![RSpec](https://github.com/qurasoft/open_weather_client/actions/workflows/ruby.yml/badge.svg)
 
-Welcome to Open Weather Client. This gem allows you to easily request weather information from OpenWeatherMap.
+Welcome to Open Weather Client.
+This gem allows you to easily request weather information from OpenWeatherMap.
 It integrates in your rails project, when you are using bundler or even in plain ruby projects.
 
 ## Installation
@@ -69,11 +70,15 @@ Whether requests are only performed when the requested time is within the last h
 If caching is enabled, requests with a time older than one hour might still be answered with a response.
 
 ```ruby
+# OpenWeatherClient initializer
 OpenWeatherClient.configure do |config|
   config.caching = OpenWeatherClient::Caching::Memory
   config.max_memory_entries = 100 # Maximum number of entries in memory cache
 end
 ```
+
+### Cache key
+The cache key for a given latitute, longitude and time is calculated by `OpenWeatherClient::Caching#cache_key(lat, lon, time)`.
 
 #### Memory Caching
 `OpenWeatherClient` supports simple in memory caching.
@@ -93,6 +98,7 @@ The quantization receives latitude and longitude.
 The result is coerced back into latitude and longitude.
 
 ```ruby
+# OpenWeatherClient initializer
 OpenWeatherClient.configure do |config|
   config.spatial_quantization = proc { |lat, lon| [lat.round(2), lon.round(2)] }
 end
