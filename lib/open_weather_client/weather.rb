@@ -41,7 +41,7 @@ module OpenWeatherClient
     def get
       OpenWeatherClient.cache.get(lat: lat, lon: lon, time: time)
     rescue KeyError
-      OpenWeatherClient::Request.get(lat: lat, lon: lon)
+      OpenWeatherClient::Request.get(lat: lat, lon: lon, time: time)
     end
   end
 end

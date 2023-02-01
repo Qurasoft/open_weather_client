@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## 0.1.5
+- Fix `OpenWeatherClient::Weather#request` ignoring the time when cache is not hit
+
 ## 0.1.4
 - Add rubocop rake task
 - Run Github actions for ruby 3.2
