@@ -71,11 +71,11 @@ module OpenWeatherClient
     #
     # Evicts the entry with the least recent access if the memory cache is full
     #
-    # @param key[String] key into the cache. Is stored at the end of the key registry
+    # @param _key[String] key into the cache. Is stored at the end of the key registry
     # @param data[Hash] data to be stored, must be able to be formatted and parsed as text
     #
     # @return [Hash] the input data
-    def caching_store(key, data)
+    def caching_store(_key, data)
       data
     end
 
