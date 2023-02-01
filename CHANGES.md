@@ -1,4 +1,12 @@
-# Open Weather Client Changelog
+# OpenWeatherClient Changelog
+
+## [Unreleased]
+
+## 0.1.4
+- Add rubocop rake task
+- Run Github actions for ruby 3.2
+- Change cache key format to `weather:<lat>:<lon>:<time}>` for better compatibility with redis
+- Make `OpenWeatherClient::Caching#cache_key` public
 
 ## 0.1.3
 Re-release of 0.1.2 since this version was released from an incorrect branch.

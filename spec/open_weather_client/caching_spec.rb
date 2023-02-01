@@ -19,4 +19,10 @@ RSpec.describe OpenWeatherClient::Caching do
       end
     end
   end
+
+  describe '#cache_key' do
+    it 'formats lat, lon and time' do
+      expect(subject.cache_key(0.5, 1.0, Time.new(2023, 2, 1, 9, 43))).to eq 'weather:0.5:1.0:2023-02-01T09'
+    end
+  end
 end

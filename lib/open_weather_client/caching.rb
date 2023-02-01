@@ -44,8 +44,6 @@ module OpenWeatherClient
       data
     end
 
-    private
-
     ##
     # Calculate the key for storage in the cache
     #
@@ -53,8 +51,10 @@ module OpenWeatherClient
     # @param lon[Float] longitude of the requests location
     # @param time[Time] time of the request
     def cache_key(lat, lon, time)
-      "#{lat}_#{lon}_#{time.strftime('%Y-%m-%dT%H')}"
+      "weather:#{lat}:#{lon}:#{time.strftime('%Y-%m-%dT%H')}"
     end
+
+    private
 
     ##
     # Read an entry out of the memory cache
