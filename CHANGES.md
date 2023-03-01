@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## 0.1.6
+- Relax required Ruby Version
+
 ## 0.1.5
 - Fix `OpenWeatherClient::Weather#request` ignoring the time when cache is not hit
 
