@@ -9,9 +9,9 @@ module OpenWeatherClient
     # When the limit is reached the least recently used entry is evicted.
     class Memory < OpenWeatherClient::Caching
       # Memory cache to store a hash of keys and request data
-      attr :memory_cache
+      attr_reader :memory_cache
       # Key registry of the memory cache. The first entry is the key of the least recently accessed data
-      attr :memory_keys
+      attr_reader :memory_keys
 
       ##
       # Initialize an empty cache
