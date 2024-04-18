@@ -4,6 +4,8 @@ module OpenWeatherClient
   ##
   # Configuratin of OpenWeatherClient
   class Configuration
+    # [String] Used api version. One of :v25, :v30. Default :v25
+    attr_accessor :api_version
     # [String] API key to access OpenWeatherMap
     attr_accessor :appid
     # Caching method. One of :none, :memory
@@ -24,6 +26,7 @@ module OpenWeatherClient
     ##
     # Initialize a new Configuration with the default settings
     def initialize
+      @api_version = :v25
       @caching = OpenWeatherClient::Caching.new
       @lang = 'de'
       @max_memory_entries = 10_000

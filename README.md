@@ -4,7 +4,7 @@
 ![RSpec](https://github.com/qurasoft/open_weather_client/actions/workflows/ruby.yml/badge.svg)
 
 Welcome to Open Weather Client.
-This gem allows you to easily request weather information from OpenWeatherMap.
+This gem allows you to easily request weather information from Open Weather.
 It integrates in your rails project, when you are using bundler or even in plain ruby projects.
 
 ## Installation
@@ -24,7 +24,7 @@ Or install it yourself as:
     $ gem install open_weather_client
 
 ## Usage
-During configuration the OpenWeatherMap API key must be set. Afterwards it is as simple as calling `OpenWeatherClient.current(lat:, lon:)` to get the current weather at a location.
+During configuration the Open Weather API key must be set. Afterwards it is as simple as calling `OpenWeatherClient.current(lat:, lon:)` to get the current weather at a location.
 
 ```ruby
 # OpenWeatherClient initializer
@@ -36,13 +36,32 @@ end
 OpenWeatherClient::Weather.current(lat: 50.3569, lon: 7.5890)
 ```
 
+### Used Open Weather API version
+Open Weather provides One Call API 3.0 and API 2.5, which is expected to be deprecated in June 2024.
+Until API 2.5 is deprecated it is the default. With Open Weather Client version 1.0 the default will change to One Call API 3.0.
+
+The used API version is configurable through `OpenWeatherClient.configuration.api_version`.
+
+```ruby
+# OpenWeatherClient initializer
+OpenWeatherClient.configure do |config|
+  config.api_version = :v25 # (default) also supports :v30
+end
+```
+
 ### Exceptions during requests
 When an error occurs during a request, an exception is raised.
-If the request is not authorized `OpenWeatherClient::AutheniticationError` is raied.
-When attributes like latitude or longitude are outside of the expected range a `RangeError` is raised.
+
+If the configured API version is not supported by the client, `OpenWeatherClient::APIVersionNotSupportedError` is raised.
+If the request is not authorized, `OpenWeatherClient::AutheniticationError` is raised.
+If attributes like latitude or longitude are outside of the expected range, `RangeError` is raised.
+If the time is longer in the past than one hour, `OpenWeatherClient::NotCurrentError` is raised.
 
 ### Secure Configuration
-In Rails provides the credentials functionality for [environmental security](https://edgeguides.rubyonrails.org/security.html#environmental-security). This mechanism can be used by OpenWeatherClient to load the API key from an encrypted file. This also allows easy separation of production and development channel configuration.
+Rails provides the credentials functionality for [environmental security](https://edgeguides.rubyonrails.org/security.html#environmental-security).
+This mechanism can be used by OpenWeatherClient to load the API key from an encrypted file.
+This also allows easy separation of production and development api key configuration.
+
 All settings are defined under the top-level entry `open_weather_client`.
 ```yaml
 # $ bin/rails credentials:edit
@@ -50,7 +69,7 @@ open_weather_client:
   appid: "<INSERT OPENWEATHERMAP API KEY HERE>"
 ```
 
-After configuration of the credentials you can load the settings in your initializer with `#load_from_rails_configuration`.
+After configuring the credentials, they can be loaded in the initializer with `#load_from_rails_configuration`.
 
 ```ruby
 # OpenWeatherClient initializer

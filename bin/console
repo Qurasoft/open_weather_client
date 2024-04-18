@@ -13,11 +13,10 @@ require 'open_weather_client'
 
 OpenWeatherClient.configure do |config|
   if File.exist?('config.yml')
-    # NOTE(Keune): The channels available in the console can be set in the file channels.yml. It contains a simple
-    # mapping of channel identifiers to webhook URLs. The channel identifier is loaded as a symbol.
+    # NOTE(Keune): The console automatically loads the appid from the config.yml file in the same directory
     #
     # Example: APPID: "<INSERT YOUR WEBHOOK URL HERE>"
-    puts 'Load channels specified by file'
+    puts 'Load appid specified by file'
 
     require 'yaml'
     settings = YAML.load_file 'config.yml'
