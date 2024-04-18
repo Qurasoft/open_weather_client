@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## 0.2.0
+- Upgrade to Open Weather One Call API 3.0 through configuration option (#8)
+
 ## 0.1.6
 - Relax required Ruby Version
 

@@ -20,6 +20,7 @@ RSpec.describe OpenWeatherClient::Configuration do
   subject { OpenWeatherClient.configuration }
 
   it 'has a default configuration' do
+    is_expected.to have_attributes(api_version: :v25)
     is_expected.to have_attributes(appid: nil)
     is_expected.to have_attributes(caching: OpenWeatherClient::Caching)
     is_expected.to have_attributes(units: 'metric')

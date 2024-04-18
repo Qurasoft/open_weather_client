@@ -9,10 +9,13 @@ require 'open_weather_client/weather'
 ##
 # Get weather data from OpenWeatherMap
 module OpenWeatherClient
+  # The configured Open Weather API Version is not supported
+  class APIVersionNotSupportedError < StandardError; end
+
   # Error during authentication with the OpenWeatherMap servers
   class AuthenticationError < StandardError; end
 
-  # The rquested time is not current enough for getting weather data from the OpenWeatherMap server
+  # The requested time is not current enough for getting weather data from the OpenWeatherMap server
   class NotCurrentError < StandardError; end
 
   class << self
